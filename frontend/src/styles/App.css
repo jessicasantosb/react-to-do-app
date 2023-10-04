@@ -1,0 +1,269 @@
+:root {
+  --light: #d8dbe0;
+  --dark: #28292c;
+  --toggleLight: #f0f0f0;
+  --toggleDark: #606060;
+  --green: #3bd16f;
+  --purple: #5b0888;
+}
+
+/*********** dark mode ***********/
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--dark);
+  color: var(--light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5%;
+}
+.title {
+  color: var(--green);
+  font-size: 3rem;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 50px 0 ;
+}
+.filter-select,
+.form-select {
+  width: 120px;
+  height: 50px;
+  background-color: var(--dark);
+  color: var(--green);
+  text-align: center;
+  border-radius: 10px;
+  border: var(--green) 1px solid;
+  cursor: pointer;
+}
+
+/* form */
+.success-msg {
+  text-align: center;
+}
+.form-section {
+  display: flex;
+  justify-content: center;
+}
+.btn-form-hide {
+  display: none;
+}
+.btn-displayForm {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  cursor: pointer;
+  color: var(--green);
+}
+.form-container {
+  padding: 30px;
+  margin: 30px;
+  border-radius: 10px;
+  border: var(--green) 3px solid;
+}
+.form-container form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+.form-container form div {
+  display: flex;
+  flex-direction: column;
+}
+.form-container form input {
+  background-color: #f0f0f0;
+  display: inline;
+  position: relative;
+  padding: 15px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  height: 40px;
+  width: 225px;
+}
+.form-select {
+  width: 260px;
+}
+.form-container form button {
+  height: 125px;
+  width: 150px;
+  margin: 5px;
+  background-color: var(--green);
+  border: var(--light) 1px solid;
+  color: var(--dark);
+  text-transform: uppercase;
+  padding: 5px;
+  line-height: 2;
+}
+.form-container form button:hover {
+  transform: scale(0.98);
+  background-color: var(--dark);
+  border: var(--green) 1px solid;
+  color: var(--green);
+}
+
+/* search / filter */
+.search-filter {
+  color: var(--light);
+  border-radius: 15px;
+  margin: 80px 0 10px 0;
+  text-align: center;
+}
+.filter-container h3 {
+  margin: 40px 0 0 0;
+}
+.filter {
+  display: flex;
+  justify-content: space-around;
+}
+.filter-asc,
+.filter-desc {
+  height: 50px;
+  width: 90px;
+  background-color: var(--dark);
+  border: var(--green) 1px solid;
+  color: var(--green);
+  text-transform: uppercase;
+  padding: 0;
+}
+.filter-asc {
+  margin-right: 10px;
+}
+.filter-asc:hover,
+.filter-desc:hover {
+  transform: scale(0.98);
+  background-color: var(--dark);
+  border: var(--green) 1px solid;
+  color: var(--green);
+}
+.search-input {
+  background-color: #d8dbe0;
+  display: inline;
+  position: relative;
+  border-radius: 10px;
+  border: var(--green) 3px solid;
+  height: 30px;
+  margin-top: 40px;
+  text-align: center;
+}
+
+/* todo */
+.todo-list {
+  color: var(--light);
+  width: 500px;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+}
+.todo {
+  background-color: var(--dark);
+  border: var(--green) 3px solid;
+  border-radius: 10px;
+  width: 100%;
+  padding: 5px;
+  margin: 0 0 30px 0;
+  display: flex;
+  justify-content: space-between;
+}
+.todo-isCompleted {
+  text-decoration: line-through;
+  opacity: 2;
+}
+.todo-category {
+  text-transform: uppercase;
+  text-align: start;
+  color: var(--green);
+  margin: 0;
+  padding-left: 10px;
+}
+.todo-task {
+  font-size: 1.25rem;
+}
+.btn-check {
+  background-color: rgb(164, 232, 164);
+  border: none;
+}
+.btn-check:hover {
+  transform: scale(0.95);
+}
+.btn-check-isCompleted {
+  opacity: 2;
+}
+.btn-times {
+  background-color: rgb(228, 154, 154);
+  border: none;
+}
+.btn-times:hover {
+  transform: scale(0.95);
+}
+
+/*********** light mode ***********/
+.white-content {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--light);
+}
+.white-content .title {
+  color: var(--purple);
+}
+.white-content .filter-select,
+.white-content .form-select {
+  background-color: var(--light);
+  color: var(--purple);
+  border: var(--purple) 1px solid;
+}
+
+/* form */
+.white-content .btn-displayForm {
+  color: var(--purple);
+}
+.white-content .form-container {
+  border: var(--purple) 3px solid;
+}
+.white-content .form-input {
+  border: var(--purple) 1px solid;
+}
+.white-content .form-container form button {
+  background-color: var(--purple);
+  color: var(--light);
+}
+.white-content .form-container form button:hover {
+  background-color: var(--light);
+  color: var(--purple);
+  border: var(--purple) 1px solid;
+}
+
+/* search / filter */
+.white-content .filter-container {
+  color: var(--dark);
+}
+.white-content .filter-select {
+  border: var(--purple) 1px solid;
+  color: var(--purple);
+}
+.white-content .filter-asc,
+.white-content .filter-desc {
+  background-color: var(--light);
+  border: var(--purple) 1px solid;
+  color: var(--purple);
+}
+.white-content .filter-asc:hover,
+.white-content .filter-desc:hover {
+  background-color: var(--purple);
+  border: var(--dark) 1px solid;
+  color: var(--light);
+}
+.search-input {
+  background-color: #f0f0f0;
+  border: var(--purple) 1px solid;
+}
+
+/* todo */
+.white-content .todo-list {
+  color: var(--dark);
+}
+.white-content .todo {
+  background-color: #f0f0f0;
+  border: var(--purple) 3px solid;
+}
+.white-content .todo-category {
+  color: var(--purple);
+}
