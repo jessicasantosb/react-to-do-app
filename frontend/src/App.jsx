@@ -6,7 +6,7 @@ import Form from "./components/form";
 import Search from "./components/search";
 import Filter from "./components/filter";
 
-const base_API = process.env.API_url || "http://localhost:8000";
+const base_API = "https://to-do-app-backend-1t1n.onrender.com" || "http://localhost:8000";
 
 function App() {
   const [todos, setTodos] = useState([]);
