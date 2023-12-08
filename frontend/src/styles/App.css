@@ -1,10 +1,14 @@
 :root {
   --light: #d8dbe0;
   --dark: #28292c;
-  --toggleLight: #f0f0f0;
-  --toggleDark: #606060;
+  --btnLight: #f0f0f0;
+  --btnDark: #606060;
   --green: #3bd16f;
   --purple: #5b0888;
+}
+* {
+  margin: 0;
+  padding: 0;
 }
 
 /*********** dark mode ***********/
@@ -12,14 +16,22 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: var(--dark);
   color: var(--light);
-  margin: 5%;
 }
 .title {
   color: var(--green);
   font-size: 2.75rem;
   text-align: center;
   text-transform: uppercase;
-  padding: 50px 0 ;
+  padding: 50px 0;
+}
+.pleaseLogin {
+  background: linear-gradient(110deg,rgba(59,209,111,1)20%, rgb(118, 232, 158)90%);
+  color: var(--btnLight);
+  text-align: center;
+  font-weight: 900;
+  width: 100%;
+  padding: 25px;
+  margin-left: 0;
 }
 .filter-select,
 .form-select {
@@ -30,6 +42,34 @@ body {
   text-align: center;
   border-radius: 10px;
   border: var(--green) 1px solid;
+  cursor: pointer;
+}
+/* login/register btn */
+.logout-btn {
+  margin: 20px;
+}
+.login-register-div {
+  margin: 20px;
+}
+.login-register-div button, .logout-btn {
+  width: 95px;
+  padding: 12px 0;
+  background-color: var(--green);
+  box-shadow: 2px 1px var(--green);
+  color: var(--dark);
+  border: 2px solid var(--green);
+  border-radius: 40px;
+  font-weight: bold;
+}
+.login-register-div button:nth-child(2) {
+  background-color: var(--btnDark);
+  color: var(--light);
+  margin-left: 15px;
+}
+.login-register-div button:hover, .logout-btn:hover {
+  transform: scale(0.95);
+  background-color: var(--btnDark);
+  color: var(--green);
   cursor: pointer;
 }
 
@@ -77,7 +117,6 @@ body {
   width: 100%;
 }
 .form-container form button {
-  height: 125px;
   width: 150px;
   margin: 5px;
   background-color: var(--green);
@@ -85,8 +124,9 @@ body {
   border-radius: 10px;
   color: var(--dark);
   text-transform: uppercase;
-  padding: 5px;
+  padding: 20px 0;
   line-height: 2;
+  cursor: pointer;
 }
 .form-container form button:hover {
   transform: scale(0.98);
@@ -127,12 +167,12 @@ body {
 .filter-asc:hover,
 .filter-desc:hover {
   transform: scale(0.98);
-  background-color: var(--dark);
+  background-color: var(--btnDark);
   border: var(--green) 1px solid;
   color: var(--green);
 }
 .search-input {
-  background-color: #d8dbe0;
+  background-color: var(--btnLight);
   display: inline;
   position: relative;
   border-radius: 10px;
@@ -145,15 +185,15 @@ body {
 /* todo */
 .todo-list {
   color: var(--light);
+  width: 70%;
+  margin: 0 auto;
   padding: 25px;
   border-radius: 15px;
   text-align: center;
 }
 .todo {
-  background-color: var(--dark);
   border: var(--green) 3px solid;
   border-radius: 10px;
-  width: 100%;
   padding: 5px;
   margin: 0 0 30px 0;
   display: flex;
@@ -161,7 +201,7 @@ body {
 }
 .todo-isCompleted {
   text-decoration: line-through;
-  opacity: 2;
+  opacity: 50%;
 }
 .todo-category {
   text-transform: uppercase;
@@ -172,23 +212,25 @@ body {
 }
 .todo-task {
   font-size: 1.25rem;
+  padding: 5px 15px;
 }
-.btn-check {
-  background-color: rgb(164, 232, 164);
+.btn-check, .btn-trash {
+  background-color: transparent;
   border: none;
+  margin: 10px;
+  display: flex;
+  align-items: center;
 }
-.btn-check:hover {
+.btn-check:hover, .btn-trash:hover {
   transform: scale(0.95);
+  cursor: pointer;
 }
 .btn-check-isCompleted {
   opacity: 2;
-}
-.btn-times {
-  background-color: rgb(228, 154, 154);
+  background-color: transparent;
   border: none;
-}
-.btn-times:hover {
-  transform: scale(0.95);
+  display: flex;
+  align-items: center;
 }
 
 /*********** light mode ***********/
@@ -199,11 +241,31 @@ body {
 .white-content .title {
   color: var(--purple);
 }
+.white-content .pleaseLogin {
+  background: linear-gradient(110deg,rgba(91,8,136,1 )20%, rgb(149, 63, 195)90%);
+  color: var(--btnLight);
+}
 .white-content .filter-select,
 .white-content .form-select {
   background-color: var(--light);
   color: var(--purple);
   border: var(--purple) 1px solid;
+}
+
+/* login/register btn */
+.white-content .login-register-div button, .white-content .logout-btn {
+  background-color: var(--purple);
+  box-shadow: 2px 1px var(--purple);
+  color: var(--light);
+  border: 2px solid var(--purple);
+}
+.white-content .login-register-div button:nth-child(2) {
+  background-color: var(--light);
+  color: var(--btnDark);
+}
+.white-content .login-register-div button:hover, .white-content .logout-btn:hover {
+  background-color: var(--light);
+  color: var(--purple);
 }
 
 /* form */
@@ -246,7 +308,7 @@ body {
   border: var(--dark) 1px solid;
   color: var(--light);
 }
-.search-input {
+.white-content .search-input {
   background-color: #f0f0f0;
   border: var(--purple) 1px solid;
 }

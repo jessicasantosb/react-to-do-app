@@ -11,13 +11,13 @@ export default function Todo({ todo, deleteTodo, completeTodo }) {
           onClick={() => completeTodo(todo._id)}
         >
           {" "}
-          <FaCheck color={todo.isCompleted ? "gray" : "green"} />
+          <FaCheck color={todo.isCompleted ? "gray" : "green"} size={25}/>
         </button>
         <div>
           <p className="todo-task">{todo.task}</p>
         </div>
-        <button className="btn-times" onClick={() => deleteTodo(todo._id)}>
-          <FaTrash color="red" />
+        <button className="btn-trash" onClick={() => deleteTodo(todo._id)}>
+          <FaTrash color="firebrick" size={25}/>
         </button>
       </div>
     </section>

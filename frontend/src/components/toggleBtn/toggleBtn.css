@@ -4,19 +4,19 @@
   right: 20px;
   width: 90px;
 }
-label {
+.toggle-label {
   position: absolute;
   width: 100%;
   height: 40px;
-  background-color: var(--toggleDark);
+  background-color: var(--btnDark);
   border-radius: 40px;
   border: var(--green) 2px solid;
   cursor: pointer;
 }
-.white-content label{
+.white-content .toggle-label{
   border: var(--purple) 2px solid;
 }
-input {
+.toggle-input {
   position: absolute;
   display: none;
 }
@@ -27,8 +27,8 @@ input {
   border-radius: 50px;
   transition: 0.3s;
 }
-input:checked ~ .slider {
-  background-color: var(--toggleLight);
+.toggle-input:checked ~ .slider {
+  background-color: var(--btnLight);
 }
 .slider::before {
   content: "";
@@ -39,10 +39,10 @@ input:checked ~ .slider {
   height: 30px;
   border-radius: 50%;
   box-shadow: inset 14px -5px 0px 0px var(--green);
-  background-color: var(--toggleDark);
+  background-color: var(--btnDark);
   transition: 0.3s;
 }
-input:checked ~ .slider::before {
+.toggle-input:checked ~ .slider::before {
   transform: translateX(42px);
   background-color: var(--purple);
   box-shadow: none;
