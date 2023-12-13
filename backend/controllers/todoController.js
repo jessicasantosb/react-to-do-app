@@ -1,72 +1,96 @@
-const mongoose = require("mongoose");
+const { validationResult } = require("express-validator");
 const Todo = require("../db/todoModel");
+const User = require("../db/userModel");
 
 const getTodo = async (req, res) => {
   try {
-    const userId = req.user._id;
-    const todos = await Todo.find({ owner: userId });
-    res.status(200).send(todos);
+    const list = await User.findById(req.userId)
+      .select("-password")
+      .populate("todos")
+      .exec();
+    return res.status(200).send("All todos list", list);
   } catch (err) {
-    res.status(400).send(err.message);
+    res.status(500).send(err.message);
   }
 };
 
 const createTodo = async (req, res) => {
-  try {
-    const { task, category } = req.body;
-    if (!task || !category) {
-      return res.status(400).send("Both task and category are required.");
-    }
-    const newTodo = new Todo({
-      task: task,
-      category: category,
-      owner: req.user._id,
-    });
-    await newTodo.save();
-    res.status(201).send(newTodo);
-    console.log("To do added successfully");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send(err.message);
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    return res.status(500).send("Todo id is required", error.mapped());
   }
-};
-
-const updateTodo = async (req, res) => {
-  const { id } = req.params;
   try {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(404).send("There's a todo with the same id");
+    const result = await Todo.create({
+      userId: req.userId,
+      task: req.body.task,
+      category: req.body.category,
+    });
+    if (result) {
+      const user = await User.findOneAndUpdate(
+        { _id: req.userId },
+        {
+          $push: { todos: result },
+        }
+      );
+      return res.status(200).send("Todo created successfuly", result);
     }
-    const todoID = { _id: id };
-    const update = { isCompleted: true };
-    const updateTodo = await Todo.findByIdAndUpdate(todoID, update);
-    if (!updateTodo) {
-      return res.status(404).send("There's a todo with the same id");
-    }
-    res.status(200).send(updateTodo);
   } catch (err) {
     res.status(500).send(err.message);
+    console.log(err.message)
   }
 };
 
 const deleteTodo = async (req, res) => {
-  const { id } = req.params;
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    return res.status(500).send("Todo id is required", error.mapped());
+  }
   try {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(404).send("There's a todo with the same id");
+    const result = await Todo.findOneAndDelete({
+        userId: req.userId,
+        _id: req.body.todo_id,
+    })
+    if (result) {
+        const user = await User.findOneAndUpdate({
+            _id: req.userId,
+        },
+        {$pull: {todos: req.body.todo_id}}
+        )
     }
-    const deleteTodo = await Todo.findByIdAndDelete({ _id: id });
-    res.status(200).send(deleteTodo);
+    return res.status(200).send("Todo completed", null);
   } catch (err) {
     res.status(500).send(err.message);
   }
 };
 
 const completeTodo = async (req, res) => {
-  const todo = await Todo.findById(req.params.id);
-  todo.isCompleted = !todo.isCompleted;
-  await todo.save();
-  res.json(todo);
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    return res.status(500).send("Todo id is required", error.mapped());
+  }
+
+  try {
+    const todo = await Todo.findOneAndUpdate(
+      {
+        _id: req.body.todo_id,
+        userId: req.userId,
+      },
+      [
+        {
+          $set: {
+            isCompleted: {
+              $eq: [false, "$isCompleted"],
+            },
+          },
+        },
+      ]
+    );
+    if (todo) {
+      return res.status(200).send("Todo completed", todo);
+    }
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 };
 
 module.exports = {

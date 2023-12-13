@@ -1,18 +1,22 @@
 import { React, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import "./styles/App.css";
-import Cookies from "universal-cookie";
 
-import ThemeToggle from "./components/themeToggle";
+import ThemeToggle from "./components/toggleBtn/themeToggle";
 import Todo from "./components/todo";
 import Form from "./components/form";
 import Search from "./components/search";
 import Filter from "./components/filter";
 import Login from "./components/modal/login";
 import Register from "./components/modal/register";
-import API from "./components/API";
+import {
+  getListApi,
+  createTodoApi,
+  deleteTodoApi,
+  completeTodoApi,
+} from "./components/services/todoApi";
 
 function App() {
+  const [user, setUser] = useState(null);
   const [todos, setTodos] = useState([]);
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
@@ -20,45 +24,52 @@ function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
 
-  const cookies = new Cookies();
-  const token = cookies.get("token");
-  const navigate = useNavigate();
-
   const openLoginModal = () => {
     setShowRegister(false);
     setShowLogin(true);
   };
 
   const logout = () => {
-    cookies.remove("token", { path: "/" });
-    navigate("/", { replace: true });
+    localStorage.clear();
+    window.location.reload(true);
   };
+
+  useEffect(() => {
+    const u = localStorage.getItem("auth");
+    setUser(u);
+  }, []);
 
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        const todosData = await API.get();
-        setTodos(todosData);
+        const todosData = await getListApi();
+        console.log(todosData.data);
+        if (todosData && todosData.data && Array.isArray(todosData.data)) {
+          setTodos(todosData.data);
+        } else {
+          setTodos([]);
+        }
       } catch (error) {
         console.error("Error fetching todos:", error);
+        setTodos([]);
       }
     };
     fetchTodos();
   }, []);
 
-  const createTodo = async (task, category) => {
+ const createTodo = async (task, category) => {
+    console.log("create todo");
     try {
-      const response = await API.create(task, category);
-      console.log(response);
+      const response = await createTodoApi(task, category);
       setTodos([...todos, response]);
     } catch (error) {
       console.error("Error creating task:", error);
     }
   };
-
+ 
   const deleteTodo = async (id) => {
     try {
-      await API.erase(id);
+      await deleteTodoApi(id);
       setTodos((prevTodos) => prevTodos.filter((todo) => todo._id !== id));
     } catch (error) {
       console.error("Error deleting task:", error);
@@ -67,7 +78,7 @@ function App() {
 
   const completeTodo = async (id) => {
     try {
-      const response = await API.complete(id);
+      const response = await completeTodoApi(id);
       setTodos((prevTodos) =>
         prevTodos.map((todo) => (todo._id === id ? response : todo))
       );
@@ -78,7 +89,7 @@ function App() {
 
   return (
     <section>
-      {token ? (
+      {user ? (
         <button
           className="logout-btn"
           onClick={() => {
@@ -123,7 +134,7 @@ function App() {
 
       <h1 className="title">Lista de tarefas</h1>
 
-      {token ? (
+      {user ? (
         <Form addTodo={createTodo} />
       ) : (
         <div className="pleaseLogin">
@@ -140,7 +151,7 @@ function App() {
         <Search search={search} setSearch={setSearch} />
       </div>
 
-      {token ? (
+      {user ? (
         <div className="todo-list">
           <div>
             {todos
@@ -149,16 +160,18 @@ function App() {
                   ? true
                   : filterStatus === "Completed"
                   ? todo.isCompleted
-                  : !todo.isCompleted
+                  : !todo.isCompleted &&
+                    todo.task &&
+                    todo.task.toLowerCase().includes(search.toLowerCase())
               )
-              .filter((todo) =>
-                todo.task.toLowerCase().includes(search.toLowerCase())
-              )
-              .sort((a, b) =>
-                sort === "Asc"
-                  ? a.task.localeCompare(b.task)
-                  : b.task.localeCompare(a.task)
-              )
+              .sort((a, b) => {
+                if (a.task && b.task) {
+                  return sort === "Asc"
+                    ? a.task.localeCompare(b.task)
+                    : b.task.localeCompare(a.task);
+                }
+                return 0;
+              })
               .map((todo) => (
                 <Todo
                   key={todo._id}

@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 
 const todoSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   task: {
     type: String,
     unique: true,
@@ -14,13 +19,12 @@ const todoSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'todoUserCollections'
-  }
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports =
-  mongoose.model.todocollections ||
-  mongoose.model("todocollections", todoSchema);
+  mongoose.model.Todo ||
+  mongoose.model("Todo", todoSchema);

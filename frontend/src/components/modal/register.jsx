@@ -11,7 +11,7 @@ function Register({ showRegister, onLoginOpen, onCloseRegister, onSuccessfulRegi
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-  const registerUrl = "http://localhost:8000/register" || "https://to-do-app-backend-1t1n.onrender.com/register";
+  const registerUrl = "http://localhost:8000/api/register" || "https://to-do-app-backend-1t1n.onrender.com/api/register";
 
   const userRef = useRef();
   const errRef = useRef();
@@ -70,6 +70,9 @@ function Register({ showRegister, onLoginOpen, onCloseRegister, onSuccessfulRegi
       };
       axios(configuration).then((result) => {
         setRegister(true);
+        if (result.data.status === 200) {
+          localStorage.setItem('auth', JSON.stringify(result.data.data))
+        }
         onSuccessfulRegistration();
       });
     } catch (err) {

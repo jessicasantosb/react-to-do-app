@@ -7,12 +7,13 @@ export default function ToggleDark(props) {
       <div className="toggle-switch">
         <label className="toggle-label">
           <input
-          className="toggle-input"
+            className="toggle-input"
             type="checkbox"
             id="checkbox-toggle"
             onClick={() => {
               props.toggleDark();
             }}
+            checked={props.isDark}
           />
           <span className="slider"></span>
         </label>

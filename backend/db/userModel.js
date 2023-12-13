@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const todoUserSchema = new mongoose.Schema({
+const userModel = new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -11,14 +11,16 @@ const todoUserSchema = new mongoose.Schema({
     required: true,
     unique: false,
   },
+  todos: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Todo",
+    },
+  ],
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-todoUserSchema.virtual("todocollections", {
-  ref: "todocollections",
-  localField: "_id",
-  foreignField: "owner",
-});
-
-module.exports =
-  mongoose.model.todoUserCollections ||
-  mongoose.model("todoUserCollections", todoUserSchema);
+module.exports = mongoose.model.User || mongoose.model("User", userModel);

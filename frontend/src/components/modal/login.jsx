@@ -1,26 +1,26 @@
 import { useRef, useState, useEffect } from "react";
 import "./modal.css";
 import { FaTimes } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Cookies from "universal-cookie";
+import useAuth from '../hooks/useAuth';
 
 function Login({ showLogin, onCloseLogin, onRegisterOpen }) {
   if (!showLogin) {
     return null;
   }
+  const { setAuth } = useAuth();
 
-  const cookies = new Cookies();
   const userRef = useRef();
   const errRef = useRef();
-  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [isLoggedin, setIsLoggedin] = useState(false);
 
-  const loginUrl = "http://localhost:8000/login" || "https://to-do-app-backend-1t1n.onrender.com/login";
+  const apiUrl =
+    "http://localhost:8000/api" ||
+    "https://to-do-app-backend-1t1n.onrender.com/api";
 
   useEffect(() => {
     userRef.current.focus();
@@ -32,10 +32,9 @@ function Login({ showLogin, onCloseLogin, onRegisterOpen }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const configuration = {
       method: "post",
-      url: loginUrl,
+      url: `${apiUrl}/login`,
       data: {
         username,
         password,
@@ -44,13 +43,9 @@ function Login({ showLogin, onCloseLogin, onRegisterOpen }) {
     axios(configuration)
       .then((result) => {
         setIsLoggedin(true);
-        cookies.set("token", result.data.token, {
-          path: "/",
-        });
-        localStorage.setItem("user", JSON.stringify(result.data.user));
-        console.log(result.data);
-        console.log(localStorage);
-        navigate("/", { replace: true });
+        const accessToken = localStorage.setItem("auth", JSON.stringify(result.data));
+        setAuth({ user, pwd, accessToken });
+        window.location.reload(true);
       })
       .catch((err) => {
         if (!err?.response) {
