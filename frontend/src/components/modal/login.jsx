@@ -44,7 +44,7 @@ function Login({ showLogin, onCloseLogin, onRegisterOpen }) {
       .then((result) => {
         setIsLoggedin(true);
         const accessToken = localStorage.setItem("auth", JSON.stringify(result.data));
-        setAuth({ user, pwd, accessToken });
+        setAuth({ username, password, accessToken });
         window.location.reload(true);
       })
       .catch((err) => {
