@@ -1,13 +1,11 @@
-const LIST = "http://localhost:8000/api/todoList" ||
-"https://to-do-app-backend-1t1n.onrender.com/api/todoList"
+const BASE_URL =
+  "http://localhost:8000/api" ||
+  "https://to-do-app-backend-1t1n.onrender.com/api";
 
-const CREATE = "http://localhost:8000/api/createTodo" ||
-"https://to-do-app-backend-1t1n.onrender.com/api/createTodo"
+const LIST = `${BASE_URL}/todoList`;
+const CREATE = `${BASE_URL}/createTodo`;
+const COMPLETE = `${BASE_URL}/isCompleted`;
+const DELETE = `${BASE_URL}/deleteTodo`;
+const REFRESH = `${BASE_URL}/refresh`;
 
-const COMPLETE = "http://localhost:8000/api/isCompleted" ||
-"https://to-do-app-backend-1t1n.onrender.com/api/isCompleted"
-
-const DELETE = "http://localhost:8000/api/deleteTodo" ||
-"https://to-do-app-backend-1t1n.onrender.com/api/deleteTodo"
-
-export {LIST, CREATE, COMPLETE, DELETE}
+export { LIST, CREATE, COMPLETE, DELETE, REFRESH };
