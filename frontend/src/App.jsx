@@ -43,7 +43,6 @@ function App() {
     const fetchTodos = async () => {
       try {
         const todosData = await getListApi();
-        console.log(todosData.data);
         if (todosData && todosData.data && Array.isArray(todosData.data)) {
           setTodos(todosData.data);
         } else {
@@ -57,7 +56,7 @@ function App() {
     fetchTodos();
   }, []);
 
- const createTodo = async (task, category) => {
+  const createTodo = async (task, category) => {
     console.log("create todo");
     try {
       const response = await createTodoApi(task, category);
@@ -66,7 +65,7 @@ function App() {
       console.error("Error creating task:", error);
     }
   };
- 
+
   const deleteTodo = async (id) => {
     try {
       await deleteTodoApi(id);
@@ -172,9 +171,9 @@ function App() {
                 }
                 return 0;
               })
-              .map((todo) => (
+              .map((todo, index) => (
                 <Todo
-                  key={todo._id}
+                  key={todo?._id || index}
                   todo={todo}
                   deleteTodo={deleteTodo}
                   completeTodo={completeTodo}

@@ -36,7 +36,7 @@ const createTodo = async (req, res) => {
     }
   } catch (err) {
     res.status(500).send(err.message);
-    console.log(err.message)
+    console.log(err.message);
   }
 };
 
@@ -47,15 +47,16 @@ const deleteTodo = async (req, res) => {
   }
   try {
     const result = await Todo.findOneAndDelete({
-        userId: req.userId,
-        _id: req.body.todo_id,
-    })
+      userId: req.userId,
+      _id: req.body.todo_id,
+    });
     if (result) {
-        const user = await User.findOneAndUpdate({
-            _id: req.userId,
+      const user = await User.findOneAndUpdate(
+        {
+          _id: req.userId,
         },
-        {$pull: {todos: req.body.todo_id}}
-        )
+        { $pull: { todos: req.body.todo_id } }
+      );
     }
     return res.status(200).send("Todo completed", null);
   } catch (err) {

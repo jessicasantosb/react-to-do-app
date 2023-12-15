@@ -2,12 +2,9 @@ import { useRef, useState, useEffect } from "react";
 import "./modal.css";
 import { FaTimes } from "react-icons/fa";
 import axios from "axios";
-import useAuth from '../hooks/useAuth';
+import useAuth from "../hooks/useAuth";
 
 function Login({ showLogin, onCloseLogin, onRegisterOpen }) {
-  if (!showLogin) {
-    return null;
-  }
   const { setAuth } = useAuth();
 
   const userRef = useRef();
@@ -23,7 +20,9 @@ function Login({ showLogin, onCloseLogin, onRegisterOpen }) {
     "https://to-do-app-backend-1t1n.onrender.com/api";
 
   useEffect(() => {
-    userRef.current.focus();
+    if (userRef.current) {
+      userRef.current.focus();
+    }
   }, []);
 
   useEffect(() => {
@@ -43,11 +42,15 @@ function Login({ showLogin, onCloseLogin, onRegisterOpen }) {
     axios(configuration)
       .then((result) => {
         setIsLoggedin(true);
-        const accessToken = localStorage.setItem("auth", JSON.stringify(result.data));
+        const accessToken = localStorage.setItem(
+          "auth",
+          JSON.stringify(result.data)
+        );
         setAuth({ username, password, accessToken });
         window.location.reload(true);
       })
       .catch((err) => {
+        console.log({ err });
         if (!err?.response) {
           setErrMsg("No server response");
         } else if (err.response?.status === 400) {
@@ -60,6 +63,10 @@ function Login({ showLogin, onCloseLogin, onRegisterOpen }) {
         errRef.current.focus();
       });
   };
+
+  if (!showLogin) {
+    return null;
+  }
 
   return (
     <section className="modal-section">
