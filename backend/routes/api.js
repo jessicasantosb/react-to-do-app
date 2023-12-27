@@ -24,7 +24,7 @@ const apiProtected = express.Router();
 apiRoute.use(cookieParser());
 apiRoute.use(
   cors({
-    origin: "*", // Replace with your front-end URL
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );

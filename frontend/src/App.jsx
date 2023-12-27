@@ -57,7 +57,6 @@ function App() {
   }, []);
 
   const createTodo = async (task, category) => {
-    console.log("create todo");
     try {
       const response = await createTodoApi(task, category);
       setTodos([...todos, response]);

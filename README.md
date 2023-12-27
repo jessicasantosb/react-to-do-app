@@ -1,10 +1,10 @@
 # React To-Do App
 
 [Português]
-Um aplicativo simples e eficiente de lista de tarefas construído com React, Tailwind CSS, Node.js e MongoDB para ajudá-lo a organizar suas tarefas diárias.
+Um aplicativo simples e eficiente de lista de tarefas construído com React, Node.js e MongoDB para ajudá-lo a organizar suas tarefas diárias.
 
 [English]
-A simple and efficient to-do list application built with React, Tailwind CSS, Node.js, and MongoDB to help you organize your daily tasks.
+A simple and efficient to-do list application built with React, Node.js, and MongoDB to help you organize your daily tasks.
 
 ## Live Demo
 
@@ -24,14 +24,14 @@ Check out the live demo:
 
 [Português]
 
-- Adicionar, editar e excluir tarefas
+- Adicionar e excluir tarefas
 - Marcar tarefas como concluídas
 - Filtrar tarefas
 - Design responsivo para dispositivos móveis e desktop
 
 [English]
 
-- Add, edit, and delete tasks
+- Add and delete tasks
 - Mark tasks as completed
 - Filter tasks
 - Responsive design for mobile and desktop
@@ -39,7 +39,6 @@ Check out the live demo:
 ## Technology Stacks
 
 - React
-- Tailwind CSS
 - Node.js
 - MongoDB
 
